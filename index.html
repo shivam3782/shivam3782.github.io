@@ -78,6 +78,60 @@
       color: var(--yellow);
       text-shadow: 0 0 10px var(--yellow);
       animation: flicker 3s infinite;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    /* PAC-MAN LOGO */
+    .pacman-logo {
+      width: 28px;
+      height: 28px;
+      background: var(--yellow);
+      border-radius: 50%;
+      position: relative;
+      animation: chomp-logo 0.5s infinite;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(255,230,0,0.6);
+    }
+
+    .pacman-logo::before {
+      content: '';
+      position: absolute;
+      top: 6px; right: -1px;
+      width: 6px; height: 6px;
+      background: var(--black);
+      border-radius: 50%;
+    }
+
+    @keyframes chomp-logo {
+      0%, 100% { clip-path: polygon(100% 50%, 0 0, 0 100%); }
+      50%       { clip-path: polygon(100% 50%, 0 15%, 0 85%); }
+    }
+
+    .pacman-dots {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    .pacman-dots span {
+      width: 5px; height: 5px;
+      background: var(--yellow);
+      border-radius: 50%;
+      display: inline-block;
+      animation: dot-fade 0.5s infinite;
+      opacity: 0.3;
+    }
+
+    .pacman-dots span:nth-child(1) { animation-delay: 0s; }
+    .pacman-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .pacman-dots span:nth-child(3) { animation-delay: 0.3s; }
+
+    @keyframes dot-fade {
+      0%, 100% { opacity: 0.15; transform: scale(0.8); }
+      50%       { opacity: 1;    transform: scale(1.2); }
     }
 
     .nav-links {
@@ -757,7 +811,13 @@
 
 <!-- NAVBAR -->
 <nav>
-  <div class="nav-logo">SHIVAM.EXE</div>
+  <a href="#hero" class="nav-logo">
+    <div class="pacman-logo"></div>
+    <div class="pacman-dots">
+      <span></span><span></span><span></span>
+    </div>
+    SHIVAM.EXE
+  </a>
   <ul class="nav-links">
     <li><a href="#about">ABOUT</a></li>
     <li><a href="#skills">SKILLS</a></li>
@@ -788,7 +848,7 @@
     <div class="hero-btns">
       <a href="#projects" class="btn btn-yellow">▶ VIEW PROJECTS</a>
       <a href="#contact" class="btn btn-outline">⚡ HIRE ME</a>
-      <a href="#" class="btn btn-outline" id="resume-btn" download>↓ RESUME</a>
+      <a href="resume.pdf" class="btn btn-outline" download="Shivam_Sharma_Resume.pdf">↓ RESUME</a>
     </div>
   </div>
 </section>
@@ -1072,9 +1132,9 @@
       LOOKING FOR A DEVELOPER?<br>
       <span style="color:var(--cyan)">LET'S TEAM UP!</span>
     </div>
-    <div class="contact-email">shivam3782@gmail.com</div>
+    <div class="contact-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b9cad1d0cfd8d48a8e818bf9ded4d8d0d597dad6d4">[email&#160;protected]</a></div>
     <div class="contact-links">
-      <a href="mailto:shivam3782@gmail.com" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#17647f7e61767a24202f2557707a767e7b3974787a" class="contact-link">
         ✉ EMAIL ME
       </a>
       <a href="https://github.com/shivam3782" target="_blank" class="contact-link">
@@ -1094,7 +1154,7 @@
   <div style="margin-top:10px; color:#333;">PRESS START TO PLAY AGAIN</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // CURSOR
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
@@ -1102,14 +1162,14 @@
     cursor.style.top = e.clientY - 8 + 'px';
   });
 
-  // LOADER
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const loader = document.getElementById('loader');
+  // LOADER — works in all environments
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    if (loader) {
       loader.style.opacity = '0';
       setTimeout(() => loader.remove(), 500);
-    }, 2200);
-  });
+    }
+  }, 2200);
 
   // STARS
   const starField = document.getElementById('stars');
@@ -1173,15 +1233,3 @@
   const xpObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.querySelectorAll('.xp-fill').forEach(bar => {
-          bar.style.width = bar.dataset.xp + '%';
-        });
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.skill-card').forEach(el => xpObserver.observe(el));
-</script>
-
-</body>
-</html>
